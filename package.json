@@ -1,6 +1,7 @@
 {
   "name": "digicert",
   "version": "0.1.0",
+  "description": "Dapp de certificacion digital con blockchain",
   "private": true,
   "dependencies": {
     "react": "^16.12.0",
@@ -27,5 +28,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "materialize-css": "^1.0.0-rc.2",
+    "react-router-dom": "^5.1.2",
+    "truffle-contract": "3.0.6",
+    "web3": "1.0.0-beta.35"
+  },
+  "author": "Jaime Jesus Alvarado Perez",
+  "license": "ISC"
 }
