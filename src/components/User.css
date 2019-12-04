@@ -1,0 +1,28 @@
+header, footer {
+    padding-left: 300px;
+  }
+  body {
+    background: white;
+  }
+  main{
+      padding-top: 50px;
+      padding-left: 300px;
+  }
+
+  i.icon-navbar{
+      color: black;
+  }
+
+  @media (min-width:500px){
+      nav{
+          height: 70px !important;            /* Cambia el valor de lo que quieres */
+          line-height: 60px !important;       /* Cambia el valor de lo que quieres */
+      }
+  }
+
+  @media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0;
+    }
+  }
+  
