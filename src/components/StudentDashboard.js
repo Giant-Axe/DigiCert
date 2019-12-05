@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './User.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 class StudentDashboard extends Component {
@@ -16,18 +15,20 @@ class StudentDashboard extends Component {
                 <header>
                     <div className="navbar-fixed">
                         <nav className="cyan darken-2">
-                            <div className="nav-wrapper">
+                            <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
+                                <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div>
                             </div>
-                            <div className="cyan darken-3">
-                                <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
-                                <a className="breadcrumb">Escritorio</a>
+                            <div className="nav-wrapper cyan darken-3">
+                                <div className="container">
+                                    <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
+                                    <a className="breadcrumb" href="#!">Escritorio</a>
+                                </div>
                             </div>
                         </nav>
                     </div>
                     
                     <div className="container section">
-                    
                         <ul className="sidenav sidenav-fixed" id="menu-side">
                             <li>
                                 <div className="user-view">
@@ -54,7 +55,6 @@ class StudentDashboard extends Component {
                             <li>
                                 <a href="#e_student" className="waves-effect waves-teal"><i className="material-icons sidenav-close">mode_edit</i>Editar Datos del Estudiante</a>
                             </li>
-
                             <li>
                                 <div className="divider"></div>
                             </li>
@@ -79,168 +79,172 @@ class StudentDashboard extends Component {
                         </ul>
                     </div>
                 </header>
+
                 <main>
-                    <div id="d_student" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Datos de la Institución</b>
+
+                    <div className="container">
+                        <div id="d_student" className="row scrollspy">
+                            <div className="col s12">
+                                <div style={{padding: "35px"}} align="center" className="card">
+                                    <div className="row">
+                                        <div className="left card-title">
+                                            <b>Datos de la Institución</b>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <ul>
-                                        <li>
-                                            <span><b>Nonbre del Estudiante: </b>Jaime Jesus Alvarado Perez</span>
-                                        </li>
-                                        <li>
-                                            <span><b>Correo Electrónico: </b>umsa@gmail.com</span>
-                                        </li>
-                                        <li>
-                                            <span><b>Teléfono: </b>12345678</span>
-                                        </li>
-                                        <li>
-                                            <span><b>Número de Certificados : </b>39</span>
-                                        </li>
-                                        <li>
-                                            <span><b>Fecha de Incorporación: </b>10/10/2019</span>
-                                        </li>
-                                        <li>
-                                            <span><b>Última Actualización: </b>12/10/2019</span>
-                                        </li>
-                                    </ul>
+                                    <div className="divider"></div>
+                                    <div className="row">
+                                        <ul>
+                                            <li>
+                                                <span><b>Nonbre del Estudiante: </b>Jaime Jesus Alvarado Perez</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Correo Electrónico: </b>umsa@gmail.com</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Teléfono: </b>12345678</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Número de Certificados : </b>39</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Fecha de Incorporación: </b>10/10/2019</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Última Actualización: </b>12/10/2019</span>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
+                        <div id="e_student" className="row scrollspy">
+                            <div className="col s12">
+                                <div style={{padding: "35px"}} align="center" className="card">
+                                    <div className="row">
+                                        <div className="left card-title">
+                                            <b>Editar Datos</b>
+                                        </div>
+                                    </div>
+                                    <div className="divider"></div>
+                                    <div className="row">
+                                        <form action="" className="col s12">
+                                            
+                                            <div className="row">
+                                                <div className="input-field col s6">
+                                                    <i className="material-icons prefix">email</i>
+                                                    <input id="institute_addres" type="text" className="validate" />
+                                                    <label htmlFor="institute_addres">Correo Electrónico</label>
+                                                </div>
+                                            </div>
                 
-                    <div id="e_student" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Editar Datos</b>
-                                    </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <form action="" className="col s12">
-                                        
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">email</i>
-                                                <input id="institute_addres" type="text" className="validate" />
-                                                <label htmlFor="institute_addres">Correo Electrónico</label>
+                                            <div className="row">
+                                                <div className="input-field col s6">
+                                                    <i className="material-icons prefix">local_phone</i>
+                                                    <input id="institute_name" type="text" className="validate" />
+                                                    <label htmlFor="institute_name">Teléfono</label>
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">local_phone</i>
-                                                <input id="institute_name" type="text" className="validate" />
-                                                <label htmlFor="institute_name">Teléfono</label>
-                                            </div>
-                                        </div>
-
-                                        <button className="btn waves-effect waves-light" type="submit">Enviar
-                                            <i className="material-icons right">send</i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="c_student" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Certificados Del Estudiante</b>
-                                    </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Organización</th>
-                                            <th>Título</th>
-                                            <th>Fecha de Emisión</th>
-                                        </tr>
-                                        </thead>
-                                
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>UMSA</td>
-                                            <td>Licenciado en Informatica</td>
-                                            <td>05/08/2002</td>
-                                            <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
-                                                    <i className="material-icons right">file_download</i>Descargar
-                                                </button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>UMSA</td>
-                                            <td>Maestria en Ciencias de la Computacion</td>
-                                            <td>10/09/2008</td>
-                                            <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
-                                                    <i className="material-icons right">file_download</i>Descargar
-                                                </button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Universidad Católica San Pablo</td>
-                                            <td>Licenciado en Derecho</td>
-                                            <td>10/10/2013</td>
-                                            <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
-                                                    <i className="material-icons right">file_download</i>Descargar
-                                                </button></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>    
-                                </div>
-                            </div>   
-                        </div>
-                    </div>
-
-                    <div id="c_certificate" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Consultar certificado</b>
-                                    </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <form action="" className="col s12">
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">public</i>
-                                                <input id="institute_name" type="text" className="validate" />
-                                                <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">widgets</i>
-                                                <input id="institute_addres" type="text" className="validate" />
-                                                <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
-                                            </div>
-                                        </div>
-                                        <button className="btn waves-effect waves-light" type="submit">Enviar
+                
+                                            <button className="btn waves-effect waves-light" type="submit">Enviar
                                                 <i className="material-icons right">send</i>
                                             </button>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>   
+                            </div>
+                        </div>
+                
+                        <div id="c_student" className="row scrollspy">
+                            <div className="col s12">
+                                <div style={{padding: "35px"}} align="center" className="card">
+                                    <div className="row">
+                                        <div className="left card-title">
+                                            <b>Certificados Del Estudiante</b>
+                                        </div>
+                                    </div>
+                                    <div className="divider"></div>
+                                    <div className="row">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Organización</th>
+                                                <th>Título</th>
+                                                <th>Fecha de Emisión</th>
+                                            </tr>
+                                            </thead>
+                                    
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>UMSA</td>
+                                                <td>Licenciado en Informatica</td>
+                                                <td>05/08/2002</td>
+                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
+                                                        <i className="material-icons right">file_download</i>Descargar
+                                                    </button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>UMSA</td>
+                                                <td>Maestria en Ciencias de la Computacion</td>
+                                                <td>10/09/2008</td>
+                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
+                                                        <i className="material-icons right">file_download</i>Descargar
+                                                    </button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Universidad Católica San Pablo</td>
+                                                <td>Licenciado en Derecho</td>
+                                                <td>10/10/2013</td>
+                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
+                                                        <i className="material-icons right">file_download</i>Descargar
+                                                    </button></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                
+                        <div id="c_certificate" className="row scrollspy">
+                            <div className="col s12">
+                                <div style={{padding: "35px"}} align="center" className="card">
+                                    <div className="row">
+                                        <div className="left card-title">
+                                            <b>Consultar certificado</b>
+                                        </div>
+                                    </div>
+                                    <div className="divider"></div>
+                                    <div className="row">
+                                        <form action="" className="col s12">
+                                            <div className="row">
+                                                <div className="input-field col s6">
+                                                    <i className="material-icons prefix">public</i>
+                                                    <input id="institute_name" type="text" className="validate" />
+                                                    <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s6">
+                                                    <i className="material-icons prefix">widgets</i>
+                                                    <input id="institute_addres" type="text" className="validate" />
+                                                    <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
+                                                </div>
+                                            </div>
+                                            <button className="btn waves-effect waves-light" type="submit">Enviar
+                                                    <i className="material-icons right">send</i>
+                                                </button>
+                                        </form>
+                                    </div>
+                                </div>   
+                            </div>
                         </div>
                     </div>
-                    
+
                 </main>
                 
 

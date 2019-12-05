@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
-import './User.css';
 
 class AdminDashboard extends Component {
 
@@ -18,20 +17,19 @@ class AdminDashboard extends Component {
                 <header>
                     <div className="navbar-fixed">
                         <nav className="cyan darken-2">
-                            <div className="nav-wrapper">
+                            <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
+                                <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div>
                             </div>
-                            <div className="cyan darken-3">
-                                <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
-                                <a className="breadcrumb">Escritorio</a>
-                                
-                                <div style={{marginRight: "20px"}} id="timestamp" className="right"></div>
+                            <div className="nav-wrapper cyan darken-3">
+                                <div className="container">
+                                    <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
+                                    <a className="breadcrumb" href="#!">Escritorio</a>
+                                </div>
                             </div>
                         </nav>
                     </div>
-                    
                     <div className="container section">
-                    
                         <ul className="sidenav sidenav-fixed" id="menu-side">
                             <li>
                                 <div className="user-view">
@@ -76,55 +74,89 @@ class AdminDashboard extends Component {
                     </div>
                 </header>
 
-
                 <main>
-                    <div id="organization" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card section ">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Instituciones</b>
+
+                    <div className="container">
+                        <div id="organization" className="row scrollspy">
+                            <div className="col s12">
+                                <div style={{padding: "35px"}} align="center" className="card section ">
+                                    <div className="row">
+                                        <div className="left card-title">
+                                            <b>Instituciones</b>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <table className="centered striped responsive-table">
-                                        <thead>
-                                        <tr>
-                                            <th>Nonbre de la Institución</th>
-                                            <th>Dirección</th>
-                                            <th>Fecha de Emisión</th>
-                                            </tr>
-                                        </thead>
-                                    
-                                        <tbody>
+                                    <div className="divider"></div>
+                                    <div className="row">
+                                        <table className="centered striped responsive-table">
+                                            <thead>
                                             <tr>
-                                                <td>Alvin</td>
-                                                <td>Eclair</td>
-                                                <td>$0.87</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Alan</td>
-                                                <td>Jellybean</td>
-                                                <td>$3.76</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jonathan</td>
-                                                <td>Lollipop</td>
-                                                <td>$7.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>    
+                                                <th>Nonbre de la Institución</th>
+                                                <th>Dirección</th>
+                                                <th>Fecha de Emisión</th>
+                                                </tr>
+                                            </thead>
+                                        
+                                            <tbody>
+                                                <tr>
+                                                    <td>Alvin</td>
+                                                    <td>Eclair</td>
+                                                    <td>$0.87</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Alan</td>
+                                                    <td>Jellybean</td>
+                                                    <td>$3.76</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jonathan</td>
+                                                    <td>Lollipop</td>
+                                                    <td>$7.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="a_organization" className="row scrollspy">
+                        <div id="a_organization" className="row scrollspy">
+                                <div className="col s12">
+                                    <div style={{padding: "35px"}} align="center" className="card">
+                                        <div className="row">
+                                            <div className="left card-title">
+                                                <b>Añadir Institución</b>
+                                            </div>
+                                        </div>
+                                        <div className="divider"></div>
+                                        <div className="row">
+                                            <form action="" className="col s12">
+                                                <div className="row">
+                                                    <div className="input-field col s6">
+                                                        <i className="material-icons prefix">account_balance</i>
+                                                        <input id="institute_name" type="text" className="validate" />
+                                                        <label for="institute_name">Nombre de la Institución</label>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="input-field col s6">
+                                                        <i className="material-icons prefix">public</i>
+                                                        <input id="institute_addres" type="text" className="validate" />
+                                                        <label for="institute_addres">Direccion Pública de la Institución</label>
+                                                    </div>
+                                                </div>
+                                                <button className="btn waves-effect waves-light" type="submit">Enviar
+                                                    <i className="material-icons right">send</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div id="c_certificate" className="row scrollspy">
                             <div className="col s12">
                                 <div style={{padding: "35px"}} align="center" className="card">
                                     <div className="row">
                                         <div className="left card-title">
-                                            <b>Añadir Institución</b>
+                                            <b>Consultar certificado</b>
                                         </div>
                                     </div>
                                     <div className="divider"></div>
@@ -132,61 +164,30 @@ class AdminDashboard extends Component {
                                         <form action="" className="col s12">
                                             <div className="row">
                                                 <div className="input-field col s6">
-                                                    <i className="material-icons prefix">account_balance</i>
+                                                    <i className="material-icons prefix">public</i>
                                                     <input id="institute_name" type="text" className="validate" />
-                                                    <label htmlFor="institute_name">Nombre de la Institución</label>
+                                                    <label for="institute_name">Direccion Pública del Estudiante</label>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="input-field col s6">
-                                                    <i className="material-icons prefix">public</i>
+                                                    <i className="material-icons prefix">widgets</i>
                                                     <input id="institute_addres" type="text" className="validate" />
-                                                    <label htmlFor="institute_addres">Direccion Pública de la Institución</label>
+                                                    <label for="institute_addres">Hash IPFS del Certificado</label>
                                                 </div>
                                             </div>
                                             <button className="btn waves-effect waves-light" type="submit">Enviar
-                                                <i className="material-icons right">send</i>
-                                            </button>
+                                                    <i className="material-icons right">send</i>
+                                                </button>
                                         </form>
                                     </div>
-                                </div>
+                                </div>   
                             </div>
                         </div>
-                    <div id="c_certificate" className="row scrollspy">
-                        <div className="col s12">
-                            <div style={{padding: "35px"}} align="center" className="card">
-                                <div className="row">
-                                    <div className="left card-title">
-                                        <b>Consultar certificado</b>
-                                    </div>
-                                </div>
-                                <div className="divider"></div>
-                                <div className="row">
-                                    <form action="" className="col s12">
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">public</i>
-                                                <input id="institute_name" type="text" className="validate" />
-                                                <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="input-field col s6">
-                                                <i className="material-icons prefix">widgets</i>
-                                                <input id="institute_addres" type="text" className="validate" />
-                                                <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
-                                            </div>
-                                        </div>
-                                        <button className="btn waves-effect waves-light" type="submit">Enviar
-                                                <i className="material-icons right">send</i>
-                                            </button>
-                                    </form>
-                                </div>
-                            </div>   
-                        </div>
                     </div>
+
                 </main>
-    
+                
 
                 <footer className="page-footer cyan darken-3">
                     <div className="container">

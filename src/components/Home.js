@@ -1,66 +1,71 @@
 import React, { Component } from 'react';
-import './Home.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 class Home extends Component {
+
+    componentDidMount(){
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav','.scrollspy');
+            var instances = M.Sidenav.init(elems);
+            var instances = M.ScrollSpy.init(elems);
+            });
+    }
 
     render() {
         return (
             <body>
                 <header>
-                    <div classNameName="navbar-fixed">
+                    <div className="navbar-fixed">
                         <nav className="cyan darken-2">
                             <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
-                                <div className="right"><a href="#" className="waves-effect waves-green btn black">INGRESAR</a></div>
+                                <div className="right"><a className="waves-effect waves-green btn black">INGRESAR</a></div>
                             </div>
                         </nav>
                     </div>
                 </header>
 
-
                 <main>
-                    <div id="c_certificate" className="row scrollspy">
-                        <div className="container">
-                            <div className="col s12">
-                                <div style={{padding: "35px"}} align="center" className="card">
-                                    <div className="row">
-                                        <div className="center card-title">
-                                            <h4>Consultar Certificado</h4>
-                                        </div>
+                    <div className="container">
+                        <div className="col s12">
+                            <div style={{padding: "35px"}} align="center" className="card">
+                                <div className="row">
+                                    <div className="center card-title">
+                                        <h4>Consultar Certificado</h4>
                                     </div>
-                                    <div className="divider"></div>
-                                    <div className="row">
-                                        <div className="justify">
-                                            <p>Para poder consultar un certificado, deberá iniciar sesión en Metamask además, proveer la dirección publica del Estudiante al que pertenece el certificado en cuestión, así como el Hash perteneciente al certificado.</p>
-                                        </div>
+                                </div>
+                                <div className="divider"></div>
+                                <div className="row">
+                                    <div className="justify">
+                                        <p>Para poder consultar un certificado, deberá iniciar sesión en Metamask además, proveer la dirección publica del Estudiante al que pertenece el certificado en cuestión, así como el Hash perteneciente al certificado.</p>
                                     </div>
-                                    <div className="row container">
-                                        <form action="" className="col s12">
-                                            <div className="row">
-                                                <div className="input-field">
-                                                    <i className="material-icons prefix">public</i>
-                                                    <input id="institute_name" type="text" className="validate" />
-                                                    <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
-                                                </div>
+                                </div>
+                                <div className="row container">
+                                    <form action="" className="col s12">
+                                        <div className="row">
+                                            <div className="input-field">
+                                                <i className="material-icons prefix">public</i>
+                                                <input id="institute_name" type="text" className="validate" />
+                                                <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
                                             </div>
-                                            <div className="row">
-                                                <div className="input-field">
-                                                    <i className="material-icons prefix">widgets</i>
-                                                    <input id="institute_addres" type="text" className="validate" />
-                                                    <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
-                                                </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="input-field">
+                                                <i className="material-icons prefix">widgets</i>
+                                                <input id="institute_addres" type="text" className="validate" />
+                                                <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
                                             </div>
-                                            <button className="btn waves-effect waves-light black" type="submit">Consultar
-                                                    <i className="material-icons right">send</i>
-                                                </button>
-                                        </form>
-                                    </div>
-                                </div>   
-                            </div>
+                                        </div>
+                                        <button className="btn waves-effect waves-light black" type="submit">Consultar
+                                                <i className="material-icons right">send</i>
+                                            </button>
+                                    </form>
+                                </div>
+                            </div>   
                         </div>
                     </div>
                 </main>
-
+                
 
                 <footer className="page-footer cyan darken-3">
                     <div className="container">

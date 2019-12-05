@@ -1,4 +1,7 @@
 import React from 'react';
+import './App.css';
+//import Routes from './Routes';
+//import './App.css';
 import StudentDashboard from './components/StudentDashboard';
 //import InstituteDashboard from './components/InstituteDashboard';
 //import Home from './components/Home';
@@ -9,6 +12,7 @@ import StudentDashboard from './components/StudentDashboard';
 function App() {
   return (
     <div className="App">
+      {/* <Routes /> */}
       {/* <Home /> */}
       {/* <AdminDashboard /> */}
       {/* <InstituteDashboard /> */}
