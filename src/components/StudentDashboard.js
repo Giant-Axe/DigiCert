@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
-import M from 'materialize-css/dist/js/materialize.min.js';
 
 class StudentDashboard extends Component {
     componentDidMount(){
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav','.scrollspy');
-            var instances = M.Sidenav.init(elems);
-            var instances = M.ScrollSpy.init(elems);
-            });
+        
     }
     render() {
         return (
-            <body>
+            <React.Fragment>
                 <header>
                     <div className="navbar-fixed">
                         <nav className="cyan darken-2">
                             <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
-                                <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div>
+                                {/* <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div> */}
                             </div>
                             <div className="nav-wrapper cyan darken-3">
                                 <div className="container">
-                                    <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
+                                    <a href="#!" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
                                     <a className="breadcrumb" href="#!">Escritorio</a>
                                 </div>
                             </div>
@@ -34,13 +29,13 @@ class StudentDashboard extends Component {
                                 <div className="user-view">
                                     <div className="background cyan darken-2">
                                     </div>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="material-icons large icon-navbar">school</i>
                                     </a>
-                                    <a>
+                                    <a href="#!">
                                         <span className="white-text"><b>Estudiante</b></span>
-                                        <span className="name white-text"><b>Cuenta: </b>0x0sasd0asda0sdasd0wdg0dfgf</span>
-                                        <span className="name white-text"><b>Balance: </b>99.9 Ether</span>
+                                        <span className="name white-text"><b>Cuenta: </b>{this.props.cuenta}</span>
+                                        <span className="name white-text"><b>Balance: </b>{this.props.balance} Ether</span>
                                     </a>
                                 </div>
                             </li>
@@ -74,7 +69,7 @@ class StudentDashboard extends Component {
                             </li>
 
                             <li>
-                                <a href="#" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
+                                <a href="#!" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
                             </li>
                         </ul>
                     </div>
@@ -244,34 +239,8 @@ class StudentDashboard extends Component {
                             </div>
                         </div>
                     </div>
-
                 </main>
-                
-
-                <footer className="page-footer cyan darken-3">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col 16 s12">
-                                <h3 className="white-text">Créditos</h3>
-                                <p>DigiCert es un proyecto que combina la tecnologia blockchain e IPFS para la emision y verificacion de certificados academicos de manera descentralizada.</p>
-                                <p>Las tecnologías usadas en el presente proyecto de manera directa o indirecta son: <b>IPFS, Ethereum, Metamask, Babel, ReactJs, Materialize(CSS)</b></p>
-                            </div>
-                            <div className="col 14 offset-12 s12">
-                                <h5 className="white-text">Links</h5>
-                                <ul>
-                                    <li><a href="#" className="grey-text text-lighten-3">Codigo Fuente</a></li>
-                                    <li><a href="#" className="grey-text text-lighten-3">Smart Contract</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="footer-copyright">
-                        <div className="container">
-                            © 2019 Contenido Open Source
-                        </div>
-                    </div>
-                </footer>
-            </body>
+            </React.Fragment>
         );
     }
 }

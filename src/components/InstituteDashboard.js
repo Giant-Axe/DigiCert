@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import M from 'materialize-css/dist/js/materialize.min.js';
-
 
 class InstituteDashboard extends Component {
 
     componentDidMount(){
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav','.scrollspy');
-            var instances = M.Sidenav.init(elems);
-            var instances = M.ScrollSpy.init(elems);
-            });
+        
     }
 
     render() {
         return (
-            <body>
+            <React.Fragment>
                 <header>
                     <div className="navbar-fixed">
                         <nav className="cyan darken-2">
@@ -290,34 +284,8 @@ class InstituteDashboard extends Component {
                             </div>
                         </div>
                     </div>
-
                 </main>
-                
-
-                <footer className="page-footer cyan darken-3">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col 16 s12">
-                                <h3 className="white-text">Créditos</h3>
-                                <p>DigiCert es un proyecto que combina la tecnologia blockchain e IPFS para la emision y verificacion de certificados academicos de manera descentralizada.</p>
-                                <p>Las tecnologías usadas en el presente proyecto de manera directa o indirecta son: <b>IPFS, Ethereum, Metamask, Babel, ReactJs, Materialize(CSS)</b></p>
-                            </div>
-                            <div className="col 14 offset-12 s12">
-                                <h5 className="white-text">Links</h5>
-                                <ul>
-                                    <li><a href="#" className="grey-text text-lighten-3">Codigo Fuente</a></li>
-                                    <li><a href="#" className="grey-text text-lighten-3">Smart Contract</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="footer-copyright">
-                        <div className="container">
-                            © 2019 Contenido Open Source
-                        </div>
-                    </div>
-                </footer>
-            </body>
+            </React.Fragment>
         );
     }
 }
