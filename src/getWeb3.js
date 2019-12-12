@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 
 const getWeb3 = () => {
+    
     return new Promise ((resolve, reject) => {
         window.addEventListener('load', function() {
             let web3 = window.web3;

@@ -14,12 +14,12 @@ class InstituteDashboard extends Component {
                         <nav className="cyan darken-2">
                             <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
-                                <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div>
+                                <div className="right"><a href="#!" className="waves-effect waves-green btn black">SALIR</a></div>
                             </div>
                             <div className="nav-wrapper cyan darken-3">
                                 <div className="container">
-                                    <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
-                                    <a className="breadcrumb" href="#!">Escritorio</a>
+                                    <a href="#!" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
+                                    <a href="#!" className="breadcrumb">Escritorio</a>
                                 </div>
                             </div>
                         </nav>
@@ -30,10 +30,10 @@ class InstituteDashboard extends Component {
                                 <div className="user-view">
                                     <div className="background cyan darken-2">
                                     </div>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="material-icons large icon-navbar">account_balance</i>
                                     </a>
-                                    <a>
+                                    <a href="#!">
                                         <span className="white-text"><b>Institución</b></span>
                                         <span className="name white-text"><b>Cuenta: </b>0x0sasd0asda0sdasd0wdg0dfgf</span>
                                         <span className="name white-text"><b>Balance: </b>99.9 Ether</span>
@@ -80,7 +80,7 @@ class InstituteDashboard extends Component {
                             </li>
 
                             <li>
-                                <a href="#" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
+                                <a href="#!" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
                             </li>
                         </ul>
                     </div>

@@ -9,6 +9,7 @@ contract DigiCert{
     
    //Estructuras de los usuarios
     struct Organization {
+        address organization_address;//direccion de la organization
         string name_organization;//nombre de la organizacion
         uint256 phone;//telefono
         string email;//correo de la institucion
@@ -20,11 +21,12 @@ contract DigiCert{
     }
 
     struct Student {
+        address student_address;//direccion del estudiante
         string name_student;//nombre del Estudiante
         string lastname_student;//apellido del Estudiante
         string email;//correo
         uint256 phone;//telefono
-        mapping (uint256 => Certificate) certificates;//mapping de los certificados que posee
+        mapping (uint256 => Certificate) certificates;//mapping de los certificados que posee el estudiante
         uint256 qt_certificates;//cantidad de certificados que posee el estudiante
         address added_by;//añadido por...
         uint256 added_timestamp;//fecha en que se añadio al estudiante
@@ -58,6 +60,7 @@ contract DigiCert{
     mapping (address => Student) public _students;//mapping de estudiantes
     
     Certificate[] public certificates_hashes;
+    Organization [] public organizations_added;
     
     //Constructor
     
@@ -88,11 +91,14 @@ contract DigiCert{
       user_type = T_ORGANIZATION;
 
       Organization memory objOrganization;
-
+      
+      objOrganization.organization_address=paddress;
       objOrganization.name_organization=_name_organization;
       objOrganization.qt_certificates_issued = 0;
       objOrganization.added_by = msg.sender;
       objOrganization.added_timestamp = block.timestamp;
+      
+      organizations_added.push(objOrganization);
 
       _organizations[paddress] = objOrganization;
       
@@ -119,6 +125,7 @@ contract DigiCert{
 
       Student memory objStudent;
 
+      objStudent.student_address=paddress;
       objStudent.name_student=_name_student;
       objStudent.lastname_student=_lastname_student;
       objStudent.qt_certificates = 0;
@@ -247,5 +254,20 @@ contract DigiCert{
               return (objCertificate.organization, objCertificate.added_by, objStudent.name_student, objStudent.lastname_student, objCertificate.title, objCertificate.added_timestamp);
           }
       }
+  }
+  
+  function totalOrganizations() public view returns (uint){
+      return organizations_added.length;
+  }
+  
+  function userType(address uaddress) public view returns (uint){
+      if(_users[uaddress]==T_ADMIN){
+          return 101;
+      }if(_users[uaddress]==T_ORGANIZATION){
+          return 102;
+      }if(_users[uaddress]==T_STUDENT){
+          return 103;
+      }else
+      return 100;
   }
 }

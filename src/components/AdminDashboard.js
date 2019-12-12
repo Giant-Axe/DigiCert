@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+
 class AdminDashboard extends Component {
 
-    componentDidMount(){
-        
+    constructor(props){
+        super(props)
+        this.state = {
+            institutes:[]
+        }
     }
-
     render() {
         return (
             <React.Fragment>
@@ -14,11 +17,11 @@ class AdminDashboard extends Component {
                         <nav className="cyan darken-2">
                             <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
-                                <div className="right"><a className="waves-effect waves-green btn black">SALIR</a></div>
+                                {/* <div className="right"><a href="#!" className="waves-effect waves-green btn black">SALIR</a></div> */}
                             </div>
                             <div className="nav-wrapper cyan darken-3">
                                 <div className="container">
-                                    <a href="#" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
+                                    <a href="#!" style={{marginLeft: "20px"}} className="breadcrumb sidenav-trigger" data-target="menu-side"><i className="material-icons">menu</i></a>
                                     <a className="breadcrumb" href="#!">Escritorio</a>
                                 </div>
                             </div>
@@ -30,13 +33,13 @@ class AdminDashboard extends Component {
                                 <div className="user-view">
                                     <div className="background cyan darken-2">
                                     </div>
-                                    <a href="#">
+                                    <a href="#!">
                                         <i className="material-icons large icon-navbar">next_week</i>
                                     </a>
-                                    <a>
+                                    <a href="#!">
                                         <span className="white-text"><b>Admin</b></span>
-                                        <span className="name white-text"><b>Cuenta: </b>0x0sasd0asda0sdasd0wdg0dfgf</span>
-                                        <span className="name white-text"><b>Balance: </b>99.9 Ether</span>
+                                        <span className="name white-text"><b>Cuenta: </b>{this.props.account}</span>
+                                        <span className="name white-text"><b>Balance: </b>{this.props.balance} Ether</span>
                                     </a>
                                 </div>
                             </li>
@@ -62,9 +65,9 @@ class AdminDashboard extends Component {
                                 <div className="divider"></div>
                             </li>
 
-                            <li>
-                                <a href="#" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
-                            </li>
+                            {/* <li>
+                                <a href="#!" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
+                            </li> */}
                         </ul>
                     </div>
                 </header>
