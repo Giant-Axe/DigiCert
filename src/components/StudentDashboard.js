@@ -1,9 +1,37 @@
 import React, { Component } from 'react';
 
 class StudentDashboard extends Component {
-    componentDidMount(){
-        
+    constructor(props){
+        super(props)
+        this.state = {
+            account: this.props.account,
+            balance: this.props.balance,
+            //datos del estudiante
+            student:{},
+        }
     }
+    
+    componentDidMount(){
+        this.setState({
+            
+        }, () => {
+            this.load();//cargamos la aplicacion luego de obtener los elementos
+        });
+    }
+    
+    //metodo para obtener los datos del estudiante
+    async getStudentData(){
+        let student = await this.props.cMethods.getStudentData(this.state.account);
+        this.setState({
+            student
+        });
+    }
+
+    //metodo para cargar los componentes de manera local
+    async load(){
+        this.getStudentData();
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -34,8 +62,8 @@ class StudentDashboard extends Component {
                                     </a>
                                     <a href="#!">
                                         <span className="white-text"><b>Estudiante</b></span>
-                                        <span className="name white-text"><b>Cuenta: </b>{this.props.cuenta}</span>
-                                        <span className="name white-text"><b>Balance: </b>{this.props.balance} Ether</span>
+                                        <span className="name white-text"><b>Cuenta: </b>{this.state.account}</span>
+                                        <span className="name white-text"><b>Balance: </b>{this.state.balance} Ether</span>
                                     </a>
                                 </div>
                             </li>
@@ -68,9 +96,9 @@ class StudentDashboard extends Component {
                                 <div className="divider"></div>
                             </li>
 
-                            <li>
+                            {/* <li>
                                 <a href="#!" className="waves-effect waves-red"><i className="material-icons">settings_power</i>SALIR</a>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </header>
@@ -90,22 +118,22 @@ class StudentDashboard extends Component {
                                     <div className="row">
                                         <ul>
                                             <li>
-                                                <span><b>Nonbre del Estudiante: </b>Jaime Jesus Alvarado Perez</span>
+                                                <span><b>Nombre del Estudiante: </b> {this.state.student.name_student}</span>
                                             </li>
                                             <li>
-                                                <span><b>Correo Electrónico: </b>umsa@gmail.com</span>
+                                                <span><b>Correo Electrónico: </b>{this.state.student.email}</span>
                                             </li>
                                             <li>
-                                                <span><b>Teléfono: </b>12345678</span>
+                                                <span><b>Teléfono: </b>{this.state.student.phone}</span>
                                             </li>
                                             <li>
-                                                <span><b>Número de Certificados : </b>39</span>
+                                                <span><b>Número de Certificados : </b>{this.state.student.qt_certificates}</span>
                                             </li>
                                             <li>
-                                                <span><b>Fecha de Incorporación: </b>10/10/2019</span>
+                                                <span><b>Fecha de Incorporación: </b>{this.state.student.added_timestamp}</span>
                                             </li>
                                             <li>
-                                                <span><b>Última Actualización: </b>12/10/2019</span>
+                                                <span><b>Última Actualización: </b>{this.state.student.updated_timestamp}</span>
                                             </li>
                                         </ul>
                                     </div>

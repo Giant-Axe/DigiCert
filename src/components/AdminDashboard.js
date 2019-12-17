@@ -6,9 +6,54 @@ class AdminDashboard extends Component {
     constructor(props){
         super(props)
         this.state = {
-            institutes:[]
-        }
+            account:this.props.account,
+            balance:this.props.balance,
+            institutes:[],
+            /*para agregar nuevas instituciones*/ 
+            paddress:'',
+            _name_organization:'',         
+        };
     }
+
+    async componentDidMount(){
+        
+        this.setState({
+            
+        }, () => {
+            this.load();//cargamos la aplicacion luego de obtener los elementos
+        });
+    }
+    //metodo para añadir instituciones
+    async addInstitutes(address,name){
+        await this.props.cMethods.addInstitute(
+            address, 
+            name, 
+            this.state.account
+        );
+    }
+    //metodo para mostrar las instituciones
+    async getInstitutes(){
+        let institutes = await this.props.cMethods.getInstitutes();
+        this.setState({
+            institutes
+        });
+        console.log(this.state.institutes);
+    }
+    //metodo para cargar los elementos del componente local
+    async load(){
+        this.getInstitutes();
+    }
+    //metodo para sincronizar los imputs con el estado del componente
+    syncAddInstitutesChanges(value,property){
+        let state = {};
+        state[property] = value; 
+        this.setState(state);
+    }
+    //metodo para enviar el formulario AddInstitute
+    // submitForm = () =>{
+    //     console.log(this.state)
+    // }
+
     render() {
         return (
             <React.Fragment>
@@ -38,14 +83,14 @@ class AdminDashboard extends Component {
                                     </a>
                                     <a href="#!">
                                         <span className="white-text"><b>Admin</b></span>
-                                        <span className="name white-text"><b>Cuenta: </b>{this.props.account}</span>
-                                        <span className="name white-text"><b>Balance: </b>{this.props.balance} Ether</span>
+                                        <span className="name white-text"><b>Cuenta: </b>{this.state.account}</span>
+                                        <span className="name white-text"><b>Balance: </b>{this.state.balance} Ether</span>
                                     </a>
                                 </div>
                             </li>
 
                             <li>
-                                <a href="#organization" className="waves-effect waves-teal"><i className="material-icons sidenav-close">account_balance</i>Ver Instituciones</a>
+                                <a href="#v_organization" className="waves-effect waves-teal"><i className="material-icons sidenav-close">account_balance</i>Ver Instituciones</a>
                             </li>
                             <li>
                                 <div className="divider"></div>
@@ -59,7 +104,7 @@ class AdminDashboard extends Component {
                             </li>
 
                             <li>
-                                <a href="#a_organization" className="waves-effect waves-teal"><i className="material-icons sidenav-close">check</i>Consultar Certificado</a>
+                                <a href="#c_certificate" className="waves-effect waves-teal"><i className="material-icons sidenav-close">check</i>Consultar Certificado</a>
                             </li>
                             <li>
                                 <div className="divider"></div>
@@ -73,9 +118,8 @@ class AdminDashboard extends Component {
                 </header>
 
                 <main>
-
                     <div className="container">
-                        <div id="organization" className="row scrollspy">
+                        <div id="v_organization" className="row scrollspy">
                             <div className="col s12">
                                 <div style={{padding: "35px"}} align="center" className="card section ">
                                     <div className="row">
@@ -87,29 +131,21 @@ class AdminDashboard extends Component {
                                     <div className="row">
                                         <table className="centered striped responsive-table">
                                             <thead>
-                                            <tr>
-                                                <th>Nonbre de la Institución</th>
-                                                <th>Dirección</th>
-                                                <th>Fecha de Emisión</th>
+                                                <tr>
+                                                    <th>Nonbre de la Institución</th>
+                                                    <th>Dirección</th>
+                                                    <th>Fecha de Emisión</th>
                                                 </tr>
                                             </thead>
                                         
                                             <tbody>
-                                                <tr>
-                                                    <td>Alvin</td>
-                                                    <td>Eclair</td>
-                                                    <td>$0.87</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Alan</td>
-                                                    <td>Jellybean</td>
-                                                    <td>$3.76</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Jonathan</td>
-                                                    <td>Lollipop</td>
-                                                    <td>$7.00</td>
-                                                </tr>
+                                                {this.state.institutes.map((institute, i) => {
+                                                    return <tr key={i}>
+                                                        <td>{institute.name_organization}</td>
+                                                        <td>{institute.organization_address}</td>
+                                                        <td>{institute.added_timestamp}</td>
+                                                    </tr>
+                                                })}
                                             </tbody>
                                         </table>    
                                     </div>
@@ -129,23 +165,41 @@ class AdminDashboard extends Component {
                                             <form action="" className="col s12">
                                                 <div className="row">
                                                     <div className="input-field col s6">
-                                                        <i className="material-icons prefix">account_balance</i>
-                                                        <input id="institute_name" type="text" className="validate" />
-                                                        <label htmlFor="institute_name">Nombre de la Institución</label>
+                                                        <i className="material-icons prefix">public</i>
+                                                        <input 
+                                                            onChange = {(ev) =>{this.syncAddInstitutesChanges(ev.target.value, 'paddress')}}
+                                                            id="institute_addres" 
+                                                            type="text" 
+                                                            className="validate" 
+                                                            value={this.state.paddress}
+                                                        />
+                                                        <label htmlFor="institute_addres">Direccion Pública de la Institución</label>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="input-field col s6">
-                                                        <i className="material-icons prefix">public</i>
-                                                        <input id="institute_addres" type="text" className="validate" />
-                                                        <label htmlFor="institute_addres">Direccion Pública de la Institución</label>
+                                                        <i className="material-icons prefix">account_balance</i>
+                                                        <input 
+                                                            onChange={ (ev)=>{ this.syncAddInstitutesChanges(ev.target.value, '_name_organization') }}
+                                                            id="institute_name" 
+                                                            type="text" 
+                                                            className="validate" 
+                                                            value={this.state._name_organization} 
+                                                        />
+                                                        <label htmlFor="institute_name">Nombre de la Institución</label>
                                                     </div>
                                                 </div>
-                                                <button className="btn waves-effect waves-light" type="submit">Enviar
+                                                <button 
+                                                onClick={ () => this.addInstitutes(this.state.paddress, this.state._name_organization) }
+                                                className="btn waves-effect waves-light" type="submit">Enviar
                                                     <i className="material-icons right">send</i>
                                                 </button>
                                             </form>
                                         </div>
+                                        {/* <div>
+                                            <pre>{ JSON.stringify(this.state._name_organization,
+                                                this.state.paddress)}</pre>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@ contract DigiCert{
     mapping (address => Student) public _students;//mapping de estudiantes
     
     Certificate[] public certificates_hashes;
-    Organization [] public organizations_added;
+    Organization[] public organizations_added;
     
     //Constructor
     

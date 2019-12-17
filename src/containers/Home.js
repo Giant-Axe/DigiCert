@@ -25,12 +25,12 @@ class Home extends Component {
         this.state = {
             user:100,
             account: undefined,
-            balance: 0,
-            institutes:[]
+            balance: 0
         }
     }
 
     async componentDidMount(){
+
         document.addEventListener('DOMContentLoaded', function() {
             M.AutoInit();
         });
@@ -60,7 +60,6 @@ class Home extends Component {
         this.setState({
             user
         });
-        console.log(this.state.user);
     }
     //metodo para recuperar el balance de la cuenta actual de metamask
     async getBalance(){
@@ -71,20 +70,11 @@ class Home extends Component {
             balance: this.toEther(weiBalance)
         });
     }
-    //metodo para mostrar las instituciones
-    async getInstitutes(){
-        let institutes = await this.digicertMethods.getInstitutes();
-        this.setState({
-            institutes
-        });
-        console.log(this.state.institutes);
-    }
+    
     //metodo para cargar los elementos
     async load(){
         //llamamos la funcion getBalance
         this.getBalance();
-        //llamamos al metodo getInstitutes
-        this.getInstitutes();
         //llamamos al metodo getUser
         this.getUser();
     }
@@ -93,21 +83,21 @@ class Home extends Component {
         if(this.state.user===101){
             return (
                 <React.Fragment>
-                    <AdminDashboard account={this.state.account} balance={this.state.balance}/>
+                    <AdminDashboard account={this.state.account} balance={this.state.balance} cMethods={this.digicertMethods}/>
                     <Footer />
                 </React.Fragment>
             );  
         }if(this.state.user===102){
             return (
                 <React.Fragment>
-                    <InstituteDashboard account={this.state.account} balance={this.state.balance}/>
+                    <InstituteDashboard account={this.state.account} balance={this.state.balance} cMethods={this.digicertMethods}/>
                     <Footer />
                 </React.Fragment>
             );  
         }if(this.state.user===103){
             return (
                 <React.Fragment>
-                    <StudentDashboard account={this.state.account} balance={this.state.balance}/>
+                    <StudentDashboard account={this.state.account} balance={this.state.balance} cMethods={this.digicertMethods}/>
                     <Footer />
                 </React.Fragment>
             );  
