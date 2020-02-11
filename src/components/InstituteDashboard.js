@@ -78,9 +78,9 @@ class InstituteDashboard extends Component {
             ipfs_hash,
             this.state.account
             )
-        // this.setState({
-        //     certificate
-        // });
+        this.setState({
+             certificate
+        });
         console.log(certificate);
     }
 
@@ -381,7 +381,7 @@ class InstituteDashboard extends Component {
                                                 onClick = { () => this.askCertificateThird(this.state.paddress, this.state.ipfs_hash)}
                                                 className="btn waves-effect waves-light" type="submit">Enviar
                                                     <i className="material-icons right">send</i>
-                                                </button>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>   

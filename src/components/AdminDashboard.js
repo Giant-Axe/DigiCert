@@ -11,7 +11,10 @@ class AdminDashboard extends Component {
             institutes:[],
             /*para agregar nuevas instituciones*/ 
             paddress:'',
-            _name_organization:'',         
+            _name_organization:'',
+            //para consultar certificados
+            certificate:{},   
+            ipfs_hash: '',     
         };
     }
 
@@ -37,22 +40,32 @@ class AdminDashboard extends Component {
         this.setState({
             institutes
         });
-        console.log(this.state.institutes);
     }
+
+    //metodo para realizar la consulta de certificados
+    async askCertificateThird(address, ipfs_hash)
+    {
+        let certificate = await this.props.cMethods.askCertificateThird(
+            address,
+            ipfs_hash,
+            this.state.account
+            )
+        this.setState({
+             certificate
+        });
+        console.log(certificate);
+    }
+
     //metodo para cargar los elementos del componente local
     async load(){
         this.getInstitutes();
     }
     //metodo para sincronizar los imputs con el estado del componente
-    syncAddInstitutesChanges(value,property){
+    syncFormsChanges(value,property){
         let state = {};
         state[property] = value; 
         this.setState(state);
     }
-    //metodo para enviar el formulario AddInstitute
-    // submitForm = () =>{
-    //     console.log(this.state)
-    // }
 
     render() {
         return (
@@ -217,20 +230,38 @@ class AdminDashboard extends Component {
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">public</i>
-                                                    <input id="institute_name" type="text" className="validate" />
+                                                    <input 
+                                                        onChange = { (ev) => {
+                                                            this.syncFormsChanges(ev.target.value, 'paddress')
+                                                        }}
+                                                        id="institute_name" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value = {this.state.paddress}
+                                                    />
                                                     <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">widgets</i>
-                                                    <input id="institute_addres" type="text" className="validate" />
+                                                    <input
+                                                        onChange = { (ev) => {
+                                                            this.syncFormsChanges(ev.target.value, 'ipfs_hash')
+                                                        }}
+                                                        id="institute_addres" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value={this.state.ipfs_hash}
+                                                    />
                                                     <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
                                                 </div>
                                             </div>
-                                            <button className="btn waves-effect waves-light" type="submit">Enviar
+                                            <button
+                                                onClick = { () => this.askCertificateThird(this.state.paddress, this.state.ipfs_hash)}
+                                                className="btn waves-effect waves-light" type="submit">Enviar
                                                     <i className="material-icons right">send</i>
-                                                </button>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>   

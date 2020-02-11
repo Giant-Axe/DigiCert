@@ -80,8 +80,8 @@ export class ContractFunctions{
 
     /**********************metodo para consulta de certificados***********************/
     async askCertificateThird(address, hash, from){
-        let certificate = this.contract.getCertificateThird(address, hash, {from});
-        return (certificate);
+        let certificate = await this.contract.getCertificateThird(address, hash, {from});
+        return this.mapCertificateThird(certificate);
     }
 
     //metodo para el mapeo de certificados
@@ -97,7 +97,7 @@ export class ContractFunctions{
         return nCertificate;
     }
 
-    /********************metodo para obtener los datos del estudiante **************** */
+    /********************metodo para obtener los datos del estudiante**************** */
     async getStudentData(address){
         let student = await this.contract._students(address);
         return this.mapStudentData(student);
@@ -106,6 +106,7 @@ export class ContractFunctions{
     mapStudentData(student){
         let nStudent = {
             name_student: student[1],
+            lastname_student: student[2],
             email: student[3],
             phone: student[4].toNumber(),
             qt_certificates: student[5].toNumber(),
@@ -113,5 +114,38 @@ export class ContractFunctions{
             updated_timestamp: student[8].toNumber(),
         }; 
         return nStudent;
+    }
+
+    /*********************metodo para editar los datos del estudiante***************/
+    async editStudentData(email, phone, from){
+        return this.contract.setStudent(email, phone, { from });
+    }
+
+    /*********************metodo para recuperar los certificados del Estudiante***************/
+    async studentCertificates(address){
+
+        let student = await this.contract._students(address);
+        let ncert = student[5].toNumber();
+        let certificates = [];
+        for (var i = 0; i < ncert; i ++){
+            let certificate = await this.contract.getCertificateEstudent(address, i);
+            certificates.push(certificate);
+        }
+        return this.mapStudentCertificates(certificates);
+    }
+    //metodo para el mapeo de los certificados del estudiante
+    mapStudentCertificates(certificates){
+        return certificates.map(certificate => {
+            return{
+                id_c: certificate[0].toNumber(),
+                name_u: certificate[1],
+                hash_c: certificate[2],
+                name_student: certificate[3],
+                lastName_student: certificate[4],
+                description: certificate[5],
+                address_u: certificate[6],
+                date: certificate[7].toNumber()
+            }
+        });
     }
 }

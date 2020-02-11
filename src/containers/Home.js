@@ -46,6 +46,15 @@ class Home extends Component {
         //recuperamos la cuenta con la que estamos trabajando
         var account = (await this.web3.eth.getAccounts())[0];
         
+        //metodo para refrescar la pagina de manera automatica
+        this.web3.currentProvider.publicConfigStore.on('update', async function(event){
+            this.setState({
+                account: event.selectedAddress
+            }, () => {
+                this.load();
+            });
+        }.bind(this));
+
         //guardamos la cuenta en el estado de react
         this.setState({
             account
@@ -104,7 +113,7 @@ class Home extends Component {
         }else{
             return (
                 <React.Fragment>
-                    <ThirdUserDashboard />
+                    <ThirdUserDashboard account={this.state.account} cMethods={this.digicertMethods}/>
                     <Footer />
                 </React.Fragment>
             );

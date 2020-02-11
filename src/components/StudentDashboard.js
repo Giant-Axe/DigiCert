@@ -7,7 +7,15 @@ class StudentDashboard extends Component {
             account: this.props.account,
             balance: this.props.balance,
             //datos del estudiante
-            student:{},
+            student:[],
+            //editar datos del estudiante
+            _phone:0,
+            _email:'',
+            sCertificates:[],
+            //para consultar certificados
+            paddress:'',
+            certificate:{},
+            ipfs_hash:'',
         }
     }
     
@@ -27,9 +35,48 @@ class StudentDashboard extends Component {
         });
     }
 
+    //metodo para editar los datos del estudiante
+    async editStudentData(email, phone){
+        await this.props.cMethods.editStudentData(
+            email,
+            phone,
+            this.state.account
+        );
+    }
+
+    //metodo para obtener los certificados del estudiante
+    async getStudentCertificates(){
+        let sCertificates = await this.props.cMethods.studentCertificates(this.state.account);
+        this.setState({
+            sCertificates
+        });
+    }
+
+    //metodo para realizar la consulta de certificados
+    async askCertificateThird(address, ipfs_hash)
+    {
+        let certificate = await this.props.cMethods.askCertificateThird(
+            address,
+            ipfs_hash,
+            this.state.account
+            )
+        this.setState({
+             certificate
+        });
+        console.log(certificate);
+    }
+
     //metodo para cargar los componentes de manera local
     async load(){
         this.getStudentData();
+        this.getStudentCertificates();
+    }
+
+    //metodo para sincronizar los imputs con el estado del componente
+    syncFormsChanges(value,property){
+        let state = {};
+        state[property] = value; 
+        this.setState(state);
     }
 
     render() {
@@ -111,7 +158,7 @@ class StudentDashboard extends Component {
                                 <div style={{padding: "35px"}} align="center" className="card">
                                     <div className="row">
                                         <div className="left card-title">
-                                            <b>Datos de la Institución</b>
+                                            <b>Datos Del Estudiante</b>
                                         </div>
                                     </div>
                                     <div className="divider"></div>
@@ -156,7 +203,13 @@ class StudentDashboard extends Component {
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">email</i>
-                                                    <input id="institute_addres" type="text" className="validate" />
+                                                    <input 
+                                                        onChange = {(ev) => {this.syncFormsChanges(ev.target.value, '_email')}}
+                                                        id="institute_addres" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value={this.state._email} 
+                                                    />
                                                     <label htmlFor="institute_addres">Correo Electrónico</label>
                                                 </div>
                                             </div>
@@ -164,13 +217,21 @@ class StudentDashboard extends Component {
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">local_phone</i>
-                                                    <input id="institute_name" type="text" className="validate" />
+                                                    <input
+                                                        onChange = {(ev) => {this.syncFormsChanges(ev.target.value, '_phone')}}
+                                                        id="institute_name" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value={this.state._phone}
+                                                    />
                                                     <label htmlFor="institute_name">Teléfono</label>
                                                 </div>
                                             </div>
                 
-                                            <button className="btn waves-effect waves-light" type="submit">Enviar
-                                                <i className="material-icons right">send</i>
+                                            <button 
+                                                onClick = { () => this.editStudentData(this.state._email, this.state._phone)}
+                                                className="btn waves-effect waves-light" type="submit">Enviar
+                                                    <i className="material-icons right">send</i>
                                             </button>
                                         </form>
                                     </div>
@@ -192,40 +253,25 @@ class StudentDashboard extends Component {
                                             <thead>
                                             <tr>
                                                 <th>Id</th>
-                                                <th>Organización</th>
+                                                <th>Institución</th>
                                                 <th>Título</th>
                                                 <th>Fecha de Emisión</th>
                                             </tr>
                                             </thead>
                                     
                                             <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>UMSA</td>
-                                                <td>Licenciado en Informatica</td>
-                                                <td>05/08/2002</td>
-                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
+                                            {this.state.sCertificates.map((certificate, i) =>{
+                                                return <tr key={i}>
+                                                    <td>{certificate.id_c}</td>
+                                                    <td>{certificate.name_u}</td>
+                                                    <td>{certificate.description}</td>
+                                                    <td>{certificate.date}</td>
+                                                    <td>{certificate.hash_c}</td>
+                                                    <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
                                                         <i className="material-icons right">file_download</i>Descargar
                                                     </button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>UMSA</td>
-                                                <td>Maestria en Ciencias de la Computacion</td>
-                                                <td>10/09/2008</td>
-                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
-                                                        <i className="material-icons right">file_download</i>Descargar
-                                                    </button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Universidad Católica San Pablo</td>
-                                                <td>Licenciado en Derecho</td>
-                                                <td>10/10/2013</td>
-                                                <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
-                                                        <i className="material-icons right">file_download</i>Descargar
-                                                    </button></td>
-                                            </tr>
+                                                </tr>
+                                            })}
                                             </tbody>
                                         </table>    
                                     </div>
@@ -247,20 +293,38 @@ class StudentDashboard extends Component {
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">public</i>
-                                                    <input id="institute_name" type="text" className="validate" />
+                                                    <input 
+                                                        onChange = { (ev) => {
+                                                            this.syncFormsChanges(ev.target.value, 'paddress')
+                                                        }}
+                                                        id="institute_name" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value = {this.state.paddress}
+                                                    />
                                                     <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">widgets</i>
-                                                    <input id="institute_addres" type="text" className="validate" />
+                                                    <input
+                                                        onChange = { (ev) => {
+                                                            this.syncFormsChanges(ev.target.value, 'ipfs_hash')
+                                                        }}
+                                                        id="institute_addres" 
+                                                        type="text" 
+                                                        className="validate"
+                                                        value={this.state.ipfs_hash}
+                                                    />
                                                     <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
                                                 </div>
                                             </div>
-                                            <button className="btn waves-effect waves-light" type="submit">Enviar
+                                            <button
+                                                onClick = { () => this.askCertificateThird(this.state.paddress, this.state.ipfs_hash)}
+                                                className="btn waves-effect waves-light" type="submit">Enviar
                                                     <i className="material-icons right">send</i>
-                                                </button>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>   
