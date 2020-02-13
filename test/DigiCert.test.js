@@ -95,7 +95,7 @@ contract('DigiCert', accounts => {
         await instance.addStudent(accounts[2], 'Jaime Jesus', 'Alvarado Perez', {from:accounts[1]});
         await instance.addCertificate(accounts[2], 'licenciado en informatica', '0x014249110', { from: accounts[1]});
 
-        let certificate = await instance.getCertificateThird(accounts[2], '0x014249110',{ from:accounts[3]});
+        let certificate = await instance.getCertificateThird('0x014249110',{ from:accounts[3]});
         assert.equal(certificate[0], 'umsa');
         assert.equal(certificate[1], accounts[1]);
         assert.equal(certificate[4], 'licenciado en informatica');

@@ -37,7 +37,7 @@ contract DigiCert{
         uint256 id;//id del certificado
         string organization; //nombre de la organizacion
         string title;//descripcion del certificado
-        //string certificate_owner;//propietario del significado
+        address certificate_owner;//propietario del significado
         string ipfs_hash;//hash del protocolo ipfs donde se alojo
         address added_by;//añadido por ...
         uint256 added_timestamp;//fecha en la que se añadio el certificado
@@ -160,6 +160,7 @@ contract DigiCert{
     objCertificate.organization =_organizations[msg.sender].name_organization;
     objCertificate.title = _title;
     objCertificate.ipfs_hash = ipfs_hash;
+    objCertificate.certificate_owner = pstudent;
     objCertificate.added_by = msg.sender;
     objCertificate.added_timestamp = block.timestamp;
 
@@ -244,13 +245,13 @@ contract DigiCert{
                     string  ->  titulo del certificado
                     uint256 ->  fecha en la que se emitio el certificado
   */
-  function getCertificateThird(address pstudent, string _ipfs_hash) public view returns (string, address, string, string, string, uint256)
+  function getCertificateThird(string _ipfs_hash) public view returns (string, address, string, string, string, uint256)
   {
       for(uint i=0; i<=certificates_hashes.length; i++){
           Certificate memory objCertificate = certificates_hashes[i];
           if(keccak256(abi.encodePacked(objCertificate.ipfs_hash)) == keccak256(abi.encodePacked(_ipfs_hash)))
           {
-              Student memory objStudent = _students[pstudent];
+              Student memory objStudent = _students[objCertificate.certificate_owner];
               return (objCertificate.organization, objCertificate.added_by, objStudent.name_student, objStudent.lastname_student, objCertificate.title, objCertificate.added_timestamp);
           }
       }

@@ -5,7 +5,6 @@ class ThirdUserDashboard extends Component {
         super(props)
         this.state = {
             //para consultar certificados
-            paddress:'',
             certificate:{},
             ipfs_hash:'',
         };
@@ -20,10 +19,9 @@ class ThirdUserDashboard extends Component {
     }
 
     //metodo para realizar la consulta de certificados
-    async askCertificateThird(address, ipfs_hash)
+    async askCertificateThird(ipfs_hash)
     {
         let certificate = await this.props.cMethods.askCertificateThird(
-            address,
             ipfs_hash,
             this.state.account
             )
@@ -56,7 +54,6 @@ class ThirdUserDashboard extends Component {
                         <nav className="cyan darken-2">
                             <div className="nav-wrapper container">
                                 <div className="brand-logo left" style={{paddingLeft: "20px"}}>DigiCert</div>
-                                {/* <div className="right"><a className="waves-effect waves-green btn black">INGRESAR</a></div> */}
                             </div>
                         </nav>
                     </div>
@@ -72,28 +69,14 @@ class ThirdUserDashboard extends Component {
                                     </div>
                                 </div>
                                 <div className="divider"></div>
-                                <div className="row">
+                                <div className="row container" style={{paddingTop: "35px"}}>
                                     <div className="justify">
-                                        <p>Para poder consultar un certificado, deberá iniciar sesión en Metamask además, proveer la dirección publica del Estudiante al que pertenece el certificado en cuestión, así como el Hash perteneciente al certificado.</p>
+                                        <p>Para poder consultar un certificado, deberá iniciar sesión en Metamask además y proveer el Hash del certificado en cuestión.</p>
                                     </div>
                                 </div>
-                                <div className="row container">
+                                <div className="row container" style={{padding: "35px"}}>
                                     <form action="" className="col s12">
-                                        <div className="row">
-                                            <div className="input-field">
-                                                <i className="material-icons prefix">public</i>
-                                                <input 
-                                                    onChange = { (ev) => {
-                                                        this.syncFormsChanges(ev.target.value, 'paddress')
-                                                    }}
-                                                    id="institute_name" 
-                                                    type="text" 
-                                                    className="validate"
-                                                    value = {this.state.paddress}
-                                                />
-                                                <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
-                                            </div>
-                                        </div>
+                                        
                                         <div className="row">
                                             <div className="input-field">
                                                 <i className="material-icons prefix">widgets</i>
@@ -109,22 +92,42 @@ class ThirdUserDashboard extends Component {
                                                 <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
                                             </div>
                                         </div>
-                                        <div id="modal1" className="modal">
-                                            <div className="modal-content">
-                                            <h4>Modal Header</h4>
-                                            <p>A bunch of text</p>
-                                            </div>
-                                            <div className="modal-footer">
-                                            <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
-                                            </div>
-                                        </div>
-                                        <button
-                                            onClick = { () => this.askCertificateThird(this.state.paddress, this.state.ipfs_hash)}
-                                            className="btn waves-effect waves-light" type="submit" data-target="modal1">Consultar
+                                        <a
+                                            onClick = { () => this.askCertificateThird(this.state.ipfs_hash)}
+                                            className="btn waves-effect waves-light modal-trigger" href="#modal1">Consultar
                                                 <i className="material-icons right">send</i>
-                                        </button>
+                                        </a>
                                     </form>
-                                    
+                                </div>
+                                
+                                <div id="modal1" className="modal">
+                                    <div className="modal-content">
+                                    <h4>Correcto!</h4>
+                                    <div className="divider"></div>
+                                    <h5>El certificado fue verificado satisfactoriamente</h5>
+                                    <div className="row container">
+                                        <ul>
+                                            <li>
+                                                <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Título: </b>{this.state.certificate.title}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                    <a href="#!" className="modal-close waves-effect waves-green btn">ACEPTAR</a>
+                                    </div>
                                 </div>
                             </div>   
                         </div>

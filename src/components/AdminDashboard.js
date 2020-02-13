@@ -43,10 +43,9 @@ class AdminDashboard extends Component {
     }
 
     //metodo para realizar la consulta de certificados
-    async askCertificateThird(address, ipfs_hash)
+    async askCertificateThird(ipfs_hash)
     {
         let certificate = await this.props.cMethods.askCertificateThird(
-            address,
             ipfs_hash,
             this.state.account
             )
@@ -180,7 +179,7 @@ class AdminDashboard extends Component {
                                                     <div className="input-field col s6">
                                                         <i className="material-icons prefix">public</i>
                                                         <input 
-                                                            onChange = {(ev) =>{this.syncAddInstitutesChanges(ev.target.value, 'paddress')}}
+                                                            onChange = {(ev) =>{this.syncFormsChanges(ev.target.value, 'paddress')}}
                                                             id="institute_addres" 
                                                             type="text" 
                                                             className="validate" 
@@ -193,7 +192,7 @@ class AdminDashboard extends Component {
                                                     <div className="input-field col s6">
                                                         <i className="material-icons prefix">account_balance</i>
                                                         <input 
-                                                            onChange={ (ev)=>{ this.syncAddInstitutesChanges(ev.target.value, '_name_organization') }}
+                                                            onChange={ (ev)=>{ this.syncFormsChanges(ev.target.value, '_name_organization') }}
                                                             id="institute_name" 
                                                             type="text" 
                                                             className="validate" 
@@ -229,21 +228,6 @@ class AdminDashboard extends Component {
                                         <form action="" className="col s12">
                                             <div className="row">
                                                 <div className="input-field col s6">
-                                                    <i className="material-icons prefix">public</i>
-                                                    <input 
-                                                        onChange = { (ev) => {
-                                                            this.syncFormsChanges(ev.target.value, 'paddress')
-                                                        }}
-                                                        id="institute_name" 
-                                                        type="text" 
-                                                        className="validate"
-                                                        value = {this.state.paddress}
-                                                    />
-                                                    <label htmlFor="institute_name">Direccion Pública del Estudiante</label>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <div className="input-field col s6">
                                                     <i className="material-icons prefix">widgets</i>
                                                     <input
                                                         onChange = { (ev) => {
@@ -257,13 +241,42 @@ class AdminDashboard extends Component {
                                                     <label htmlFor="institute_addres">Hash IPFS del Certificado</label>
                                                 </div>
                                             </div>
-                                            <button
-                                                onClick = { () => this.askCertificateThird(this.state.paddress, this.state.ipfs_hash)}
-                                                className="btn waves-effect waves-light" type="submit">Enviar
+                                            <a
+                                                onClick = { () => this.askCertificateThird(this.state.ipfs_hash)}
+                                                className="btn waves-effect waves-light modal-trigger" href="#modal1">Consultar
                                                     <i className="material-icons right">send</i>
-                                            </button>
+                                            </a>
                                         </form>
                                     </div>
+                                    <div id="modal1" className="modal">
+                                    <div className="modal-content">
+                                    <h4>Correcto!</h4>
+                                    <div className="divider"></div>
+                                    <h5>El certificado fue verificado satisfactoriamente</h5>
+                                    <div className="row container">
+                                        <ul>
+                                            <li>
+                                                <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Título: </b>{this.state.certificate.title}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
+                                            </li>
+                                            <li>
+                                                <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                    <a href="#!" className="modal-close waves-effect waves-green btn">ACEPTAR</a>
+                                    </div>
+                                </div>
                                 </div>   
                             </div>
                         </div>

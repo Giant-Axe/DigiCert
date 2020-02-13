@@ -39,7 +39,7 @@ export class ContractFunctions{
             return {
                 organization_address: institute[0],
                 name_organization: institute[1],
-                added_timestamp: institute[7].toNumber()
+                added_timestamp: this.convertTime(institute[7].toNumber()),
             }
         });
     }
@@ -57,8 +57,8 @@ export class ContractFunctions{
             email: institute[3],
             web_page: institute[4],
             qt_certificates_issued: institute[5].toNumber(),
-            added_timestamp: institute[7].toNumber(),
-            updated_timestamp: institute[8].toNumber(),
+            added_timestamp: this.convertTime(institute[7].toNumber()),
+            updated_timestamp: this.convertTime(institute[8].toNumber()),
         }; 
         return nInstitute;
     }
@@ -79,8 +79,8 @@ export class ContractFunctions{
     }
 
     /**********************metodo para consulta de certificados***********************/
-    async askCertificateThird(address, hash, from){
-        let certificate = await this.contract.getCertificateThird(address, hash, {from});
+    async askCertificateThird(hash, from){
+        let certificate = await this.contract.getCertificateThird(hash, {from});
         return this.mapCertificateThird(certificate);
     }
 
@@ -92,9 +92,22 @@ export class ContractFunctions{
             student_name:certificate[2],
             student_lastName:certificate[3],
             title:certificate[4],
-            date:certificate[5].toNumber(),
+            date:this.convertTime(certificate[5].toNumber()),
         };
         return nCertificate;
+    }
+    //metodo para convertir timestamp
+    convertTime(UNIX_timestamp){
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+        return time;
     }
 
     /********************metodo para obtener los datos del estudiante**************** */
@@ -110,8 +123,8 @@ export class ContractFunctions{
             email: student[3],
             phone: student[4].toNumber(),
             qt_certificates: student[5].toNumber(),
-            added_timestamp: student[7].toNumber(),
-            updated_timestamp: student[8].toNumber(),
+            added_timestamp: this.convertTime(student[7].toNumber()),
+            updated_timestamp: this.convertTime(student[8].toNumber()),
         }; 
         return nStudent;
     }
@@ -144,7 +157,7 @@ export class ContractFunctions{
                 lastName_student: certificate[4],
                 description: certificate[5],
                 address_u: certificate[6],
-                date: certificate[7].toNumber()
+                date: this.convertTime(certificate[7].toNumber()),
             }
         });
     }
