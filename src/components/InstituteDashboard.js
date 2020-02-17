@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import swal from '@sweetalert/with-react';
 
-//const ipfsClient = require('ipfs-http-client')
-//const ipfs = ipfsClient({host: 'ipfs.infura.io',port: 5001, protocol: 'https'})
+//Importamos el modulo ipfs
+import ipfs from '../ipfs';
 
 class InstituteDashboard extends Component {
 
@@ -27,6 +28,7 @@ class InstituteDashboard extends Component {
             certificate:{},
             //para almacenar los archivos en ipfs
             buffer: null,
+            c_ipfs_hash:'',
         };
     }
 
@@ -75,47 +77,87 @@ class InstituteDashboard extends Component {
         );
     }
 
-    //metodo para realizar la consulta de certificados
-    async askCertificateThird(ipfs_hash)
-    {
-        let certificate = await this.props.cMethods.askCertificateThird(
-            ipfs_hash,
-            this.state.account
-            )
-        this.setState({
-             certificate
-        });
-        console.log(certificate);
-    }
+        //metodo para realizar la consulta de certificados
+        async askCertificateThird(ipfs_hash)
+        {
+            try{
+                let certificate = await this.props.cMethods.askCertificateThird(
+                ipfs_hash,
+                this.state.account
+                )
+                this.setState({
+                 certificate
+                });
+                this.showVerifiedCertificate();
+            }
+            
+            catch(err){
+                swal(<div>
+                    <h3>Incorrecto!</h3>
+                    <p>Dirección Hash de certificado incorrecto o no existe</p>
+                </div>,{icon:"warning"})
+            }
+        }
+    
+        //funcion para mostrar los datos de la consulta de certificados
+        showVerifiedCertificate(){
+                console.log(this.state.certificate)
+                swal( <div className="row container">
+                    <h3>Correcto!</h3>
+                    <h5>El certificado fue verificado satisfactoriamente</h5>
+                    <ul>
+                        <li>
+                            <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
+                        </li>
+                        <li>
+                            <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
+                        </li>
+                        <li>
+                            <span><b>Título: </b>{this.state.certificate.title}</span>
+                        </li>
+                        <li>
+                            <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
+                        </li>
+                        <li>
+                            <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
+                        </li>
+                    </ul>
+                </div>,{icon:"success"})
+        }
 
     //metodo para cargar los componentes de manera local
     async load(){
         this.getInstituteData();
     }
     //metodo para capturar el documento
-    /*captureFile = (event) => {
-        event.preventDefault();
+    captureFile = (event) => {
+        event.preventDefault()
         //procesar el documento para ipfs
-        const file = event.target.files[0];
-        const reader = new window.FileReader();
-        reader.readAsArrayBuffer(file);
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
         reader.onloadend = () => {
-            this.setState({buffer: Buffer(reader.result)});
-        }
+            this.setState({ buffer:Buffer(reader.result) })
+        } 
     }
 
+    //metodo para enviar el certificado
     onSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
+        console.log("Subiendo el Formulario...")
         console.log(this.state.buffer)
-        console.log("Subiendo el Formulario...");
-        ipfs.add(this.state.buffer, (error, result) => {
-            console.log('ipfs result', result);
+        ipfs.add(this.state.buffer, (error, result) =>{
+            console.log('IPFS result', result)
+            const c_ipfs_hash = result[0].hash
+            this.setState({ c_ipfs_hash })
+            console.log(c_ipfs_hash)
+            this.addNewCertificates(this.state.paddress,this.state._title,this.state.c_ipfs_hash)
             if(error){
-                console.error(error);
+                console.error(error)
                 return
             }
         })
-    }*/
+    }
 
     //metodo para sincronizar los imputs con el estado del componente
     syncFormsChanges(value,property){
@@ -218,7 +260,7 @@ class InstituteDashboard extends Component {
                                     <div className="row">
                                         <ul>
                                             <li>
-                                                <span><b>Nonbre de la Institución: </b>{this.state.institute.name_organization}</span>
+                                                <span><b>Nombre de la Institución: </b>{this.state.institute.name_organization}</span>
                                             </li>
                                             <li>
                                                 <span><b>Teléfono: </b>{this.state.institute.phone}</span>
@@ -313,7 +355,7 @@ class InstituteDashboard extends Component {
                                     </div>
                                     <div className="divider"></div>
                                     <div className="row">
-                                        <form action="" /*onSubmit={this.onSubmit}*/ className="col s12">
+                                        <form className="col s12" onSubmit= {this.onSubmit}>
                                             <div className="row">
                                                 <div className="input-field col s6">
                                                     <i className="material-icons prefix">public</i>
@@ -341,23 +383,22 @@ class InstituteDashboard extends Component {
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                <div className="input-field col s6">
-                                                    <i className="material-icons prefix">widgets</i>
-                                                    <input 
-                                                        onChange = {(ev) => {this.syncFormsChanges(ev.target.value, 'ipfs_hash')}}
-                                                        id="certificate_hash" 
-                                                        type="text" 
-                                                        className="validate" 
-                                                        value={this.state.ipfs_hash}
-                                                    />
-                                                    <label htmlFor="certificate_hash">Hash IPFS del Certificado</label>
+                                            <div className="file-field input-field col s6">
+                                                <div className="btn">
+                                                    <span>Certificado</span>
+                                                    <input type="file" onChange={this.captureFile} />
+                                                </div>
+                                                <div className="file-path-wrapper">
+                                                    <input className="file-path validate" type="text" placeholder="Selecione el Certificado a Emitir" />
+                                                </div>
                                                 </div>
                                             </div>
-                                            <button 
-                                            onClick={() => this.addNewCertificates(this.state.paddress,this.state._title,this.state.ipfs_hash)}
-                                                className="btn waves-effect waves-light" type="submit">Enviar
+                                            {/* <a
+                                                onClick={this.onSubmit}
+                                                className="btn waves-effect waves-light" type="submit" href="#!">Enviar
                                                 <i className="material-icons right">send</i>
-                                            </button>
+                                            </a> */}
+                                            <input className="btn waves-effect waves-light" type="submit" />
                                         </form>
                                     </div>
                                 </div>
@@ -391,40 +432,10 @@ class InstituteDashboard extends Component {
                                             </div>
                                             <a
                                                 onClick = { () => this.askCertificateThird(this.state.ipfs_hash)}
-                                                className="btn waves-effect waves-light modal-trigger" href="#modal1">Consultar
+                                                className="btn waves-effect waves-light modal-trigger" href="#!">Consultar
                                                     <i className="material-icons right">send</i>
                                             </a>
                                     </form>
-                                </div>
-                                
-                                <div id="modal1" className="modal">
-                                    <div className="modal-content">
-                                    <h4>Correcto!</h4>
-                                    <div className="divider"></div>
-                                    <h5>El certificado fue verificado satisfactoriamente</h5>
-                                    <div className="row container">
-                                        <ul>
-                                            <li>
-                                                <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
-                                            </li>
-                                            <li>
-                                                <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
-                                            </li>
-                                            <li>
-                                                <span><b>Título: </b>{this.state.certificate.title}</span>
-                                            </li>
-                                            <li>
-                                                <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
-                                            </li>
-                                            <li>
-                                                <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    </div>
-                                    <div className="modal-footer">
-                                    <a href="#!" className="modal-close waves-effect waves-green btn">ACEPTAR</a>
-                                    </div>
                                 </div>
                                 </div>   
                             </div>

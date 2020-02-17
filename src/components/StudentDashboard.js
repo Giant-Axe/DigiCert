@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import swal from '@sweetalert/with-react';
 
 class StudentDashboard extends Component {
     constructor(props){
@@ -52,18 +53,53 @@ class StudentDashboard extends Component {
         });
     }
 
-    //metodo para realizar la consulta de certificados
-    async askCertificateThird(ipfs_hash)
-    {
-        let certificate = await this.props.cMethods.askCertificateThird(
-            ipfs_hash,
-            this.state.account
-            )
-        this.setState({
-             certificate
-        });
-        console.log(certificate);
-    }
+   //metodo para realizar la consulta de certificados
+   async askCertificateThird(ipfs_hash)
+   {
+       try{
+           let certificate = await this.props.cMethods.askCertificateThird(
+           ipfs_hash,
+           this.state.account
+           )
+           this.setState({
+            certificate
+           });
+           this.showVerifiedCertificate();
+       }
+       
+       catch(err){
+           swal(<div>
+               <h3>Incorrecto!</h3>
+               <p>Dirección Hash de certificado incorrecto o no existe</p>
+           </div>,{icon:"warning"})
+       }
+   }
+
+   //funcion para mostrar los datos de la consulta de certificados
+   showVerifiedCertificate(){
+           console.log(this.state.certificate)
+           swal( <div className="row container">
+               <h3>Correcto!</h3>
+               <h5>El certificado fue verificado satisfactoriamente</h5>
+               <ul>
+                   <li>
+                       <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
+                   </li>
+                   <li>
+                       <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
+                   </li>
+                   <li>
+                       <span><b>Título: </b>{this.state.certificate.title}</span>
+                   </li>
+                   <li>
+                       <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
+                   </li>
+                   <li>
+                       <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
+                   </li>
+               </ul>
+           </div>,{icon:"success"})
+   }
 
     //metodo para cargar los componentes de manera local
     async load(){
@@ -267,9 +303,9 @@ class StudentDashboard extends Component {
                                                     <td>{certificate.description}</td>
                                                     <td>{certificate.date}</td>
                                                     <td>{certificate.hash_c}</td>
-                                                    <td><button className="btn-small waves-effect waves-light" type="submit" name="action">
+                                                    <td><a className="btn-small waves-effect waves-light" type="submit" name="action" href={`https://ipfs.io/ipfs/${certificate.hash_c}`}download>
                                                         <i className="material-icons right">file_download</i>Descargar
-                                                    </button></td>
+                                                    </a></td>
                                                 </tr>
                                             })}
                                             </tbody>
@@ -307,41 +343,11 @@ class StudentDashboard extends Component {
                                             </div>
                                             <a
                                             onClick = { () => this.askCertificateThird(this.state.ipfs_hash)}
-                                            className="btn waves-effect waves-light modal-trigger" href="#modal1">Consultar
+                                            className="btn waves-effect waves-light modal-trigger" href="#!">Consultar
                                                 <i className="material-icons right">send</i>
                                             </a>
                                     </form>
                                 </div>
-                                
-                                <div id="modal1" className="modal">
-                                    <div className="modal-content">
-                                        <h4>Correcto!</h4>
-                                        <div className="divider"></div>
-                                        <h5>El certificado fue verificado satisfactoriamente</h5>
-                                        <div className="row container">
-                                            <ul>
-                                                <li>
-                                                    <span><b>Emitido Por: </b>{this.state.certificate.name_institute}</span>
-                                                </li>
-                                                <li>
-                                                    <span><b>Direccion Pública de la Institución: </b>{this.state.certificate.address_institute}</span>
-                                                </li>
-                                                <li>
-                                                    <span><b>Título: </b>{this.state.certificate.title}</span>
-                                                </li>
-                                                <li>
-                                                    <span><b>Propietario: </b>{this.state.certificate.student_name} {this.state.certificate.student_lastName}</span>
-                                                </li>
-                                                <li>
-                                                    <span><b>Fecha de Emisión: </b>{this.state.certificate.date}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        </div>
-                                        <div className="modal-footer">
-                                        <a href="#!" className="modal-close waves-effect waves-green btn">ACEPTAR</a>
-                                        </div>
-                                    </div>
                                 </div>   
                             </div>
                         </div>

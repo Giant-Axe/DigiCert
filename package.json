@@ -30,9 +30,11 @@
     ]
   },
   "devDependencies": {
-    "ipfs-http-client": "^42.0.0",
+    "@sweetalert/with-react": "^0.1.1",
+    "ipfs-http-client": "^38.0.0",
     "materialize-css": "^1.0.0-rc.2",
     "react-router-dom": "^5.1.2",
+    "sweetalert": "^2.1.2",
     "truffle-contract": "^3.0.6",
     "web3": "1.0.0-beta.35"
   },
